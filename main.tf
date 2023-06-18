@@ -3,6 +3,6 @@ resource "aws_instance" "web" {
   instance_type = "t2.micro"
 
   tags = {
-    Name = "${var.component}-${var.env}"
+    Name = "var.component-var.env"
   }
 }
