@@ -50,10 +50,6 @@ resource "aws_iam_role_policy_attachment" "policy-attach" {
   policy_arn = aws_iam_policy.policy.arn
 }
 
-
-
-
-
 ########### Create ec2 instance in terraform #############
 resource "aws_instance" "instance" {
   ami           = data.aws_ami.ami.id
