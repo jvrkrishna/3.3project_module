@@ -1,3 +1,44 @@
+########### Create I am policy in terraform ############
+resource "aws_iam_policy" "policy" {
+  name        = "${var.component}-${var.env}-ssm-pm-policy"
+  path        = "/"
+  description = "${var.component}-${var.env}-ssm-pm-policy"
+
+  policy = {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "VisualEditor0",
+        "Effect": "Allow",
+        "Action": [
+          "ssm:GetParameterHistory",
+          "ssm:GetParametersByPath",
+          "ssm:GetParameters",
+          "ssm:GetParameter"
+        ],
+        "Resource": "arn:aws:ssm:us-east-1:207072006229:parameter/roboshop.${var.env}.${var.component}.*"
+      }
+    ]
+  }
+}
+
+############# Create I am role in terraform ######################
+resource "aws_iam_role" "test_role" {
+  name = "${var.component}-${var.env}-ec2-role"
+
+  assume_role_policy = {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "ec2.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole"
+      }
+    ]
+  }
+}
 ########### Create ec2 instance in terraform #############
 resource "aws_instance" "instance" {
   ami           = data.aws_ami.ami.id
