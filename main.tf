@@ -42,3 +42,4 @@ resource "aws_route53_record" "www" {
   records = [aws_instance.instance.private_ip]
 }
 
+
