@@ -28,19 +28,20 @@ EOF
 ############# Create I am role in terraform ######################
 resource "aws_iam_role" "role" {
   name = "${var.component}-${var.env}-ec2-role"
-
-  assume_role_policy = {
+  assume_role_policy = <<EOF
+{
     "Version": "2012-10-17",
     "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "ec2.amazonaws.com"
-        },
-        "Action": "sts:AssumeRole"
-      }
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "ec2.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
     ]
-  }
+}
+EOF
 }
 ############### Create I am instance profile ###################
 resource "aws_iam_instance_profile" "instance_profile" {
