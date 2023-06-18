@@ -42,4 +42,21 @@ resource "aws_route53_record" "www" {
   records = [aws_instance.instance.private_ip]
 }
 
+############## Provisioner for remote in terraform ################
+resource "null_resource" "ansible" {
+  depends_on = [aws_instance.instance, aws_route53_record.www]
+  provisioner "remote-exec" {
+    connection {
+      type     = "ssh"
+      user     = "centos"
+      password = "DevOps321"
+      host     = aws_instance.instance.public_ip
+    }
+    inline = [
+      "sudo labauto ansible",
+      "ansible-pull -i localhost, -U https://github.com/jvrkrishna/roboshop-ansible roboshop.yml -e env=${var.env} -e role_name=${var.component}"
+    ]
+  }
+}
+
 
