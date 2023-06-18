@@ -11,8 +11,8 @@ resource "aws_instance" "instance" {
 
 ############# Create vps security group in terraform ##############
 resource "aws_security_group" "sg" {
-  name        = "${var.component}-${var.env}-sg"
-  description = "${var.component}-${var.env}-sg"
+  name        = "${var.component}-${var.env}-sec"
+  description = "${var.component}-${var.env}-sec"
 
   ingress {
     from_port        = 0
@@ -29,6 +29,6 @@ resource "aws_security_group" "sg" {
   }
 
   tags = {
-    Name = "${var.component}-${var.env}-sg"
+    Name = "${var.component}-${var.env}-sec"
   }
 }
