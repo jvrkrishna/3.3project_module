@@ -23,7 +23,7 @@ resource "aws_iam_policy" "policy" {
 }
 
 ############# Create I am role in terraform ######################
-resource "aws_iam_role" "test_role" {
+resource "aws_iam_role" "role" {
   name = "${var.component}-${var.env}-ec2-role"
 
   assume_role_policy = {
@@ -39,6 +39,12 @@ resource "aws_iam_role" "test_role" {
     ]
   }
 }
+############### Create I am instance profile ###################
+resource "aws_iam_instance_profile" "instance_profile" {
+  name = "${var.component}-${var.env}-instance-profile"
+  role = aws_iam_role.role.name
+}
+
 ########### Create ec2 instance in terraform #############
 resource "aws_instance" "instance" {
   ami           = data.aws_ami.ami.id
