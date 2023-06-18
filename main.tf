@@ -44,6 +44,11 @@ resource "aws_iam_instance_profile" "instance_profile" {
   name = "${var.component}-${var.env}-instance-profile"
   role = aws_iam_role.role.name
 }
+############### Create Policy attachment in terraform ##############
+resource "aws_iam_role_policy_attachment" "policy-attach" {
+  role       = aws_iam_role.role.name
+  policy_arn = aws_iam_policy.policy.arn
+}
 
 ########### Create ec2 instance in terraform #############
 resource "aws_instance" "instance" {
