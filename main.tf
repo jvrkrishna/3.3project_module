@@ -32,3 +32,13 @@ resource "aws_security_group" "sg" {
     Name = "${var.component}-${var.env}-sg"
   }
 }
+
+############ create DNS Records for instances in teraform ###########
+resource "aws_route53_record" "www" {
+  zone_id = "Z0858447245XTBTK7DY06"
+  name    = "${var.component}-${var.env}"
+  type    = "A"
+  ttl     = 30
+  records = [aws_instance.instance.private_ip]
+}
+
